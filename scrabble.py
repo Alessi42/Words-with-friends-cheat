@@ -14,28 +14,50 @@ def loadWords():
         wordList.append(line.strip().lower())
     return wordList
 
+def getFrequencyDict(sequence):
+    """
+    Returns a dictionary where the keys are elements of the sequence
+    and the values are integer counts, for the number of times that
+    an element is repeated in the sequence.
+
+    sequence: string or list
+    return: dictionary
+    """
+    # freqs: dictionary (element_type -> int)
+    freq = {}
+    for x in sequence:
+        freq[x] = freq.get(x,0) + 1
+    return freq
+
 def isValidWord(word, hand, i):
     if i not in word: return False
-    hand += i
-    blanks = hand.count('?')
+    blanks = 0 if hand.get('?') == None else hand.get('?')
     failed = 0
     for i in word:
-        if hand.count(i)<word.count(i):
+        if hand.get(i)==None or hand.get(i)<word.count(i):
           failed +=1
           if failed > blanks:
               return False
     return True
 
 wordList = loadWords()
-if __name__ == '__main__':
-  while input("Any key to continue `q` to quit: ") != 'q':
-    availableTiles = "".join(set(list(input("Enter the tiles already on the board: ")))).lower()
-    hand = input("Enter the tiles that are in your hand: ").lower()
+#wordList = ['agonize', 'ark', 'asunder', 'boskier', 'butlery', 'cheekier', 'clop', 'cymlins', 'deep', 'divest', 'erlking', 'faubourg', 'finery', 'fjelds', 'fowled', 'gallic', 'gangers', 'grainer', 'gullied', 'hornist', 'ideally', 'jiggly', 'loam', 'loathe', 'marooned', 'mhos', 'mistrial', 'mix', 'nitchies', 'nitrile', 'noblesse', 'olden', 'pygmaean', 'rearmost', 'residues', 'roadways', 'schemes', 'scotoma', 'seawan', 'slanged', 'sooners', 'splasher', 'stooked', 'stuffy', 'transact', 'treaty', 'ukes', 'venally', 'whiffers', 'xebecs']
+while input("Any key to continue `q` to quit: ") != 'q':
+    availableTiles = set("".join(sorted(set(list(input("Enter the tiles already on the board: "))))).lower())
+    # branch
+    hand = sorted(input("Enter the tiles that are in your hand: ").lower())
+    #availableTiles =  sorted(set('asdafdahsrdfbghthrewsdfsdsddsuutoyubdd'.lower()))
+    #hand = sorted('sdgthqereyriutycszxvbnu'.lower())
     start_time = timeit.default_timer()
     words = []
+    alphawords = ''
     for i in availableTiles:
-      words.extend([(getWordScore(word, i),word, i) for word in wordList if isValidWord(word, hand,i)])
-    print(sorted(set(words)))
+      fullHand = getFrequencyDict(str(hand)+str(i))
+      iwords = [(getWordScore(word, i),word, i) for word in wordList if isValidWord(word, fullHand,i)]
+      words.extend(iwords)
+      #alphawords += "\n"+str(i)+str(sorted(iwords, reverse = True)[-50:])+'\n'
+    #print(alphawords)
+    print(sorted(words))
     print("Time: ", timeit.default_timer() - start_time)
     
-# A simple python script that chooses the best possible word to play in words with friends **Note** this does not take into consideration the state of the board only what the best words to play are
+## TODO make this a golang backend
