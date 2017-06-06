@@ -29,8 +29,8 @@ def isValidWord(word, hand, i):
 wordList = loadWords()
 if __name__ == '__main__':
   while input("Any key to continue `q` to quit: ") != 'q':
-    availableTiles = "".join(set(list(input("Enter the tiles already on the board: "))))
-    hand = input("Enter the tiles that are in your hand: ")
+    availableTiles = "".join(set(list(input("Enter the tiles already on the board: ")))).lower()
+    hand = input("Enter the tiles that are in your hand: ").lower()
     start_time = timeit.default_timer()
     words = []
     for i in availableTiles:
@@ -38,3 +38,4 @@ if __name__ == '__main__':
     print(sorted(set(words)))
     print("Time: ", timeit.default_timer() - start_time)
     
+# A simple python script that chooses the best possible word to play in words with friends **Note** this does not take into consideration the state of the board only what the best words to play are
