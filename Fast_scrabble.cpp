@@ -47,10 +47,11 @@ string hand;
 int main()
 {
 	auto time = get_time::now();
-	
-	readFile(filename, wordList, inFile); // reads the contents of filename into the wordlist set
+	// Read the contents of filename into the wordlist set
+	readFile(filename, wordList, inFile); 
 	cout << "Any key to continue `q` to quit:" << endl;
-	while (getline(cin, quit) && quit != "q") // Loops while the user doesn't want to quit
+	// Has the user pressed q to quit
+	while (getline(cin, quit) && quit != "q")
 	{
 		cout << "Enter the tiles already on the board: ";
 		getline(cin, branch);
