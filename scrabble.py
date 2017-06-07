@@ -57,7 +57,8 @@ while input("Any key to continue `q` to quit: ") != 'q':
       words.extend(iwords)
       #alphawords += "\n"+str(i)+str(sorted(iwords, reverse = True)[-50:])+'\n'
     #print(alphawords)
+    time = timeit.default_timer() - start_time
     print(sorted(words))
-    print("Time: ", timeit.default_timer() - start_time)
+    print("Time: ", time)
     
 ## TODO make this a golang backend
