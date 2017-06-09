@@ -110,7 +110,7 @@ int main()
 	}
 }
 
-void readFile(string strFile, set<string> &vecNames, ifstream &iFile) //Read the file into the vector function definition
+void readFile(string strFile, set<string> &vecNames, ifstream &iFile)
 {
 	string word; 
 	// Opens file
